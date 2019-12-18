@@ -1,6 +1,6 @@
-package Location;
+package DataModel;
 
-public class Monument extends Location{
+public class Monument {
     private String architect;
     private int inauguration;
 }
