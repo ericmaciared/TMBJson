@@ -1,5 +1,7 @@
 package Utils;
 
+import DataModel.User;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -13,14 +15,16 @@ public class Menu {
     final private int MIN = 1;
 
     private int option;
+    private boolean mainMenu;
     private Scanner scanner;
 
     public Menu() {
         scanner = new Scanner(System.in);
         option = -1;
+        mainMenu = true;
     }
 
-    public void printMainMenu(){
+    public void printMenu(){
         System.out.println(option1);
         System.out.println(option2);
         System.out.println(option3);
@@ -29,16 +33,45 @@ public class Menu {
     }
 
     public void askForOption(){
+        String aux;
+
         System.out.println("");
         System.out.println(ask);
-        option = scanner.nextInt();
+        aux = scanner.nextLine();
+        try{
+            option = Integer.parseInt(aux.toLowerCase());
+        }
+        catch (NumberFormatException e){
+            option = -1;
+        }
     }
 
     public boolean validOption() {
+        if (!(option <= MAX && option >= MIN)){
+            System.out.println("\nERROR: Invalid option.\n");
+        }
         return option <= MAX && option >= MIN;
     }
 
     public boolean exit() {
         return option == MAX;
     }
+
+    public User login() {
+        String username;
+        String email;
+        int birthYear;
+
+        System.out.println("Welcome to the TMBJson application! Please enter the requested information.\n");
+        System.out.println("Username: ");
+        username = scanner.nextLine();
+        System.out.println("\nE-mail: ");
+        email = scanner.nextLine();
+        System.out.println("\nBirth Year: ");
+        birthYear = scanner.nextInt();
+        System.out.println("\nThe information has been successfully registered!");
+
+        return new User(username, email, birthYear);
+    }
+
 }
