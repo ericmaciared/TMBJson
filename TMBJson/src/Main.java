@@ -23,7 +23,7 @@ public class Main {
         try{
             logic.loadLocations();
         } catch (FileNotFoundException e) {
-            System.out.println("\nERROR: There was a problem when reading the Locations file.");
+            System.err.println("\nERROR: There was a problem when reading the Locations file.");
             return;
         }
 

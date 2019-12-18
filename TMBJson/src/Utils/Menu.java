@@ -48,7 +48,7 @@ public class Menu {
 
     public boolean validOption() {
         if (!(option <= MAX && option >= MIN)){
-            System.out.println("\nERROR: Invalid option.\n");
+            System.err.println("\nERROR: Invalid option.\n");
         }
         return option <= MAX && option >= MIN;
     }
