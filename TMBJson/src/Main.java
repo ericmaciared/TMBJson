@@ -27,7 +27,6 @@ public class Main {
             return;
         }
 
-        //Login of user
         //user = menu.login();
 
         do {
