@@ -15,13 +15,11 @@ public class Menu {
     final private int MIN = 1;
 
     private int option;
-    private boolean mainMenu;
     private Scanner scanner;
 
     public Menu() {
         scanner = new Scanner(System.in);
         option = -1;
-        mainMenu = true;
     }
 
     public void printMenu(){
@@ -69,9 +67,13 @@ public class Menu {
         email = scanner.nextLine();
         System.out.println("\nBirth Year: ");
         birthYear = scanner.nextInt();
-        System.out.println("\nThe information has been successfully registered!");
+        System.out.println("\nThe information has been successfully registered!\n");
+        String buffer = scanner.nextLine();     //Collect residual \n from birthYear int (unused)
 
         return new User(username, email, birthYear);
     }
 
+    public int getOption() {
+        return option;
+    }
 }
