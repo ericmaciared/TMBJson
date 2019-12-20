@@ -1,6 +1,7 @@
 import DataModel.User;
 import Utils.Logic;
 import Utils.Menu;
+import Utils.UserManagement;
 
 import java.io.FileNotFoundException;
 
@@ -15,9 +16,7 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) {
-        User user;
         Logic logic = new Logic();
-        Menu menu = new Menu();
 
         //First we import the localizations
         try{
@@ -27,14 +26,9 @@ public class Main {
             return;
         }
 
-        //user = menu.login();
+        logic.login();  //Set login user to active user in Data Model
 
-        do {
-            do {
-                menu.printMenu();
-                menu.askForOption();
-            } while (!menu.validOption());
-
-        } while(!menu.exit());
+        //Main logic-graphic loop
+        logic.run();
     }
 }

@@ -1,9 +1,12 @@
 package DataModel;
 
+import java.util.ArrayList;
+
 public class User {
     private String username;
     private String email;
     private int birthYear;
+    private ArrayList<Location> userLocations = new ArrayList<Location>();
 
     public User(String username, String email, int birthYear) {
         this.username = username;
@@ -11,27 +14,13 @@ public class User {
         this.birthYear = birthYear;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", birthYear=" + birthYear +
+                ", userLocations=" + userLocations +
+                '}';
     }
 }
