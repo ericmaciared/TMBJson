@@ -102,4 +102,29 @@ public class Menu {
     public void askFavorite() {
 
     }
+
+    public int askForCode() {
+        int code = 0;
+
+        do {
+            System.out.println("Enter the stop code:");
+
+            try{
+                code = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.err.println("ERROR! Insert a code number");
+                code = 0;
+            }
+        } while(code == 0);
+
+        return code;
+    }
+
+    public void showBusWaitTimes(ArrayList<String> list) {
+        for (String s: list){
+            System.out.println(s);
+        }
+
+        System.out.println();
+    }
 }

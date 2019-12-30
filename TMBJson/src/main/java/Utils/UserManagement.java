@@ -1,5 +1,6 @@
 package Utils;
 
+import MetroLineAPI.MetroStations;
 import DataModel.Location;
 import User.User;
 
@@ -152,5 +153,38 @@ public class UserManagement {
         description = scanner.nextLine();
 
         return new Location(name, coordinates, description);
+    }
+
+    //Show History (Option b)
+    public void showHistory(ArrayList<Location> history) {
+        if (history.isEmpty()){
+            System.err.println("You have not searched for any locations!");
+            System.err.println("To search for one, access option 2 in the principal menu.\n");
+        }
+        else{
+            System.out.println("Searched locations:");
+            for (Location l: history){
+                System.out.println("\t-" + l.getName());
+            }
+            System.out.println();
+        }
+    }
+
+    public void stationsInauguratedInBirthYear(User user, MetroStations metroStations) {
+        int found = 0;
+
+        ArrayList<String> stations = metroStations.metroStationsInauguratedInYear(user.getBirthYear());
+
+        System.out.println("");
+        if (stations.isEmpty()){
+            System.err.println("No subway station opened your birth year :(");
+        }
+        else{
+            System.out.println("Stations inaugurated in " + user.getBirthYear() + ":");
+            for (String s: stations){
+                System.out.println("\t-"+s);
+            }
+        }
+        System.out.println("");
     }
 }
