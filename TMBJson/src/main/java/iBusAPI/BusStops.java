@@ -24,6 +24,8 @@ public class BusStops {
             list.add(i.getLine() + " - " + i.getDestination() + " - " + i.gettMin() + "min");
         }
 
+
+
         return list;
     }
 }

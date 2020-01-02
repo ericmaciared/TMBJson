@@ -163,6 +163,9 @@ public class Logic {
     private void searchLocation() {
         String name;
         boolean found = false;
+        boolean addFavorite = false;
+        Location favoriteLocation = null;
+        String type = null;
 
         name = menu.askLocationName();
 
@@ -181,6 +184,7 @@ public class Logic {
             if (l.getName().equalsIgnoreCase(name)){
                 menu.showLocationInfo(l);
                 found = true;
+                favoriteLocation = l;
                 history.add(0, l);  //Add location to history at beginning
             }
         }
@@ -189,7 +193,12 @@ public class Logic {
             System.err.println("\nSorry, there is no location with this name.\n");
         }
         else{
-            menu.askFavorite();
+            addFavorite = menu.askAddNewFavorite();
+
+            if (addFavorite){
+                type = menu.askFavoriteType(favoriteLocation.getName());
+                user.addFavorite(favoriteLocation, type);
+            }
         }
     }
 
@@ -203,11 +212,12 @@ public class Logic {
         BusStops busStops = null;
         ArrayList<String> list = null;
         Boolean empty = false;
+        int code = menu.askForCode();
 
         do {
             empty = false;
             String URL = "https://api.tmb.cat/v1/ibus/stops/";
-            URL += menu.askForCode() + ACCESS; //Building whole URL String with access keys
+            URL += code + ACCESS; //Building whole URL String with access keys
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
@@ -229,7 +239,9 @@ public class Logic {
                 empty = true;
             }
 
-            System.out.println(busStops.toString());
+            //System.out.println(busStops.toString());
+
+            //Check if favorite
 
             try{
                 list = busStops.makeBusWaitList();
@@ -239,7 +251,6 @@ public class Logic {
             }
             
         } while (empty);
-        
 
         menu.showBusWaitTimes(list);
     }

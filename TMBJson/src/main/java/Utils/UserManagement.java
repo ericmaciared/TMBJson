@@ -23,6 +23,7 @@ public class UserManagement {
         scanner = new Scanner(System.in);
     }
 
+    //Menu printing
     public void printMenu(){
         System.out.println(optionA);
         System.out.println(optionB);
@@ -170,6 +171,13 @@ public class UserManagement {
         }
     }
 
+    //Show My Routes (Option c)
+
+
+    //Show Favorite Stops and Stations (Option d)
+
+
+    //Show Metro Stations Inaugurated in Year (Option e)
     public void stationsInauguratedInBirthYear(User user, MetroStations metroStations) {
         int found = 0;
 

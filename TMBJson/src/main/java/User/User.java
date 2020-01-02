@@ -9,6 +9,7 @@ public class User {
     private String email;
     private int birthYear;
     private ArrayList<Location> userLocations = new ArrayList<Location>();
+    private ArrayList<Favorite> favoriteLocations = new ArrayList<Favorite>();
 
     public User(String username, String email, int birthYear) {
         this.username = username;
@@ -52,5 +53,13 @@ public class User {
 
     public ArrayList<Location> getUserLocations() {
         return userLocations;
+    }
+
+    public ArrayList<Favorite> getFavoriteLocations() {
+        return favoriteLocations;
+    }
+
+    public void addFavorite(Location favoriteLocation, String type) {
+        favoriteLocations.add(new Favorite(type, favoriteLocation));
     }
 }
