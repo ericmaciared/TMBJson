@@ -99,7 +99,70 @@ public class Menu {
         System.out.println("");
     }
 
-    public void askFavorite() {
-
+    public boolean askAddNewFavorite() {
+        System.out.println("Do you want to add this location as your favorite? (yes/no)");
+        if (scanner.nextLine().equalsIgnoreCase("yes")){
+            System.out.println("");
+            return true;
+        }
+        else{
+            System.out.println("");
+            return false;
+        }
     }
+
+    public String askFavoriteType(String favoriteLocation) {
+        String answer;
+
+        do {
+            System.out.println("Type (home / work / studies / leisure / culture): ");
+            answer = scanner.nextLine();
+            System.out.println("");
+        } while (!validType(answer));
+
+        System.out.println(favoriteLocation + " has been assigned as a new favorite location.");
+
+        return answer;
+    }
+
+
+    private boolean validType(String answer) {
+        boolean b = answer.equalsIgnoreCase("home") || answer.equalsIgnoreCase("work") ||
+                answer.equalsIgnoreCase("studies") || answer.equalsIgnoreCase("leisure") ||
+                answer.equalsIgnoreCase("culture");
+
+        if (!b){
+            System.err.println("Error! You have to enter \"home\", \"work\", \"studies\",\"leisure\" or \"culture\".");
+            System.out.println("");
+        }
+
+        return b;
+    }
+
+    //Show Bus Wait Times (Option 4)
+    public int askForCode() {
+        int code = -1;
+
+        do {
+            System.out.println("Enter the stop code:");
+
+            try{
+                code = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e){
+                System.err.println("ERROR! Code not valid!");
+                code = -1;
+            }
+        } while(code == -1);
+
+        return code;
+    }
+
+    public void showBusWaitTimes(ArrayList<String> list) {
+        for (String s: list){
+            System.out.println(s);
+        }
+
+        System.out.println();
+    }
+
 }
