@@ -92,23 +92,25 @@ public class Menu {
     }
 
     public void showLocationInfo(Location l) {
-        System.out.println("");
-        System.out.println("Position: " + l.getCoordinates()[0] + ", " + l.getCoordinates()[1]);
-        System.out.println("Description: ");
-        System.out.println(l.getDescription());
-        System.out.println("");
+        l.summaryInformation();
     }
 
     public boolean askAddNewFavorite() {
-        System.out.println("Do you want to add this location as your favorite? (yes/no)");
-        if (scanner.nextLine().equalsIgnoreCase("yes")){
-            System.out.println("");
-            return true;
-        }
-        else{
-            System.out.println("");
-            return false;
-        }
+        String answer;
+
+        do {
+            System.out.println("Do you want to add this location as your favorite? (yes/no)");
+            answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("yes")){
+                System.out.println("");
+                return true;
+            }
+            else if (answer.equalsIgnoreCase("no")){
+                System.out.println("");
+                return false;
+            }
+            System.err.println("Error! Insert (yes/no) only.");
+        }  while (true);
     }
 
     public String askFavoriteType(String favoriteLocation) {
@@ -120,11 +122,10 @@ public class Menu {
             System.out.println("");
         } while (!validType(answer));
 
-        System.out.println(favoriteLocation + " has been assigned as a new favorite location.");
+        System.out.println(favoriteLocation + " has been assigned as a new favorite location.\n");
 
         return answer;
     }
-
 
     private boolean validType(String answer) {
         boolean b = answer.equalsIgnoreCase("home") || answer.equalsIgnoreCase("work") ||

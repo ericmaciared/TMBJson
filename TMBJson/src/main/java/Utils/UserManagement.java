@@ -90,7 +90,7 @@ public class UserManagement {
         return string.equalsIgnoreCase("yes") || string.equalsIgnoreCase("no");
     }
 
-    public Location askLocationInfo(Location[] locations) {
+    public Location askLocationInfo(ArrayList<Location> locations, ArrayList<Location> userLocations) {
         String name;
         double[] coordinates = new double[2];
         String description;
@@ -108,7 +108,13 @@ public class UserManagement {
             for (Location l: locations){
                 if (l.getName().equalsIgnoreCase(name)){
                     nameOK = false;
-                    System.err.println("ERROR! This location already exists.");
+                    System.err.println("ERROR! This location already exists.\n");
+                }
+            }
+            for (Location l: userLocations){
+                if (l.getName().equalsIgnoreCase(name)){
+                    nameOK = false;
+                    System.err.println("ERROR! This location already exists.\n");
                 }
             }
         } while(!nameOK);
@@ -123,6 +129,7 @@ public class UserManagement {
                 coordinates[0] = Double.parseDouble(buffer);
             } catch (NumberFormatException e) {
                 lengthOK = false;
+                System.err.println("ERROR! This length isn't in EPSG 4326 format");
             }
 
             if ((coordinates[0] > 180.0) || (coordinates[0] < -180.0) && !lengthOK){
@@ -141,6 +148,7 @@ public class UserManagement {
                 coordinates[1] = Double.parseDouble(buffer);
             } catch (NumberFormatException e) {
                 latitudeOK = false;
+                System.err.println("ERROR! This latitude isn't in EPSG 4326 format");
             }
 
             if ((coordinates[1] > 90.0) || (coordinates[1] < -90.0) && !latitudeOK){
@@ -175,7 +183,9 @@ public class UserManagement {
 
 
     //Show Favorite Stops and Stations (Option d)
+    public void showFavorites() {
 
+    }
 
     //Show Metro Stations Inaugurated in Year (Option e)
     public void stationsInauguratedInBirthYear(User user, MetroStations metroStations) {
