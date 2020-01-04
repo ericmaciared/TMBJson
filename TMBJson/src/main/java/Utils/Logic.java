@@ -70,8 +70,7 @@ public class Logic {
 
         reader = new JsonReader(new FileReader(PATH));
         data = gson.fromJson(reader, DataModel.class);
-
-        //System.out.println(data.toString());      //test for importation correctly
+        data.transformLocations();
     }
 
     private void loadMetroStations(){
@@ -124,9 +123,9 @@ public class Logic {
         } else if ("b".equals(option)) {
             userManagement.showHistory(history);
         } else if ("c".equals(option)) {
-            System.out.println("c option");
+
         } else if ("d".equals(option)) {
-            System.out.println("d option");
+            showFavoriteStopsAndStations();
         } else if ("e".equals(option)) {
             userManagement.stationsInauguratedInBirthYear(user, metroStations);
         }
@@ -148,7 +147,7 @@ public class Logic {
         do {
             addLocation = userManagement.myLocations(user);
             if (addLocation){
-                newLocation = userManagement.askLocationInfo(data.getLocations());
+                newLocation = userManagement.askLocationInfo(data.getLocations(), user.getUserLocations());
                 user.getUserLocations().add(newLocation);
             }
         } while (addLocation);
@@ -157,6 +156,19 @@ public class Logic {
     //Option 1c
     private void myRoutes(){
 
+    }
+
+    //Option 1d
+    private void showFavoriteStopsAndStations(){
+
+        if (user.getUserLocations().isEmpty()){
+            System.err.println("Error! In order to have favorite stops and stations it is necessary to create a favorite location previously.\n");
+        }
+        else{
+
+        }
+
+        userManagement.showFavorites();
     }
 
     //Option 2
@@ -174,6 +186,7 @@ public class Logic {
             if (l.getName().equalsIgnoreCase(name)){
                 menu.showLocationInfo(l);
                 found = true;
+                favoriteLocation = l;
                 history.add(0, l); //Add location to history at beginning
 
             }
@@ -204,6 +217,9 @@ public class Logic {
 
     //Option3
     private void planRoute() {
+        StringBuilder URL = new StringBuilder();
+        URL.append("https://api.tmb.cat/v1/planner/plan");
+
 
     }
 
@@ -211,7 +227,7 @@ public class Logic {
     private void busWaitTime(){
         BusStops busStops = null;
         ArrayList<String> list = null;
-        Boolean empty = false;
+        boolean empty = false;
         int code = menu.askForCode();
 
         do {
@@ -238,8 +254,6 @@ public class Logic {
                 e.printStackTrace();
                 empty = true;
             }
-
-            //System.out.println(busStops.toString());
 
             //Check if favorite
 
