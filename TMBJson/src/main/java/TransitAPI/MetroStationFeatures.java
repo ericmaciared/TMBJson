@@ -1,6 +1,8 @@
-package MetroLineAPI;
+package TransitAPI;
 
 public class MetroStationFeatures {
+    private int CODI_PARADA;
+    private String NOM_PARADA;
     private int ID_ESTACIO_LINIA;
     private int CODI_ESTACIO_LINIA;
     private int CODI_GRUP_ESTACIO;
@@ -25,34 +27,6 @@ public class MetroStationFeatures {
     private String PICTO_GRUP;
     private int ID_TIPUS_ESTAT;
     private String NOM_TIPUS_ESTAT;
-
-    /*
-    private String CODI_FAMILIA;
-    private String CODI_LINIA;
-    private String CODI_OPERADOR;
-    private String CODI_TIPUS_CALENDARI;
-    private String CODI_AUX_LINIA;
-    private String COLOR_AUX_LINIA;
-    private String COLOR_LINIA;
-    private String COLOR_TEXT_LINIA;
-    private String DATA_FI;
-    private String DATA_INICI;
-    private String DESC_LINIA;
-    private String DESC_TIPUS_CALENDARI;
-    private String DESTI_LINIA;
-    private int ID_FAMILIA;
-    private int ID_LINIA;
-    private int ID_OPERADOR;
-    private int ID_TIPUS_CALENDARI;
-    private int ID_TIPUS_TRANSPORT;
-    private String NOM_FAMILIA;
-    private String NOM_LINIA;
-    private String NOM_OPERADOR;
-    private String NOM_TIPUS_TRANSPORT;
-    private int ORDRE_FAMILIA;
-    private int ORDRE_LINIA;
-    private int ORIGEN_LINIA;
-    */
 
     @Override
     public String toString() {
@@ -94,5 +68,17 @@ public class MetroStationFeatures {
 
     public String getNOM_LINIA() {
         return NOM_LINIA;
+    }
+
+    public int getCODI_ESTACIO() {
+        return CODI_ESTACIO;
+    }
+
+    public int getCODI_PARADA() {
+        return CODI_PARADA;
+    }
+
+    public String getNOM_PARADA() {
+        return NOM_PARADA;
     }
 }

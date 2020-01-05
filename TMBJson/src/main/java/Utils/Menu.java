@@ -49,6 +49,7 @@ public class Menu {
         catch (NumberFormatException e){
             option = -1;
         }
+        System.out.println("");
     }
 
     public boolean validOption() {
@@ -138,6 +139,50 @@ public class Menu {
         }
 
         return b;
+    }
+
+    //Plan Route (Option 3)
+    /**
+     *
+     * @param isOrigin: true if asking for origin, false is asking for destination
+     * @return: returns string containing user input
+     */
+    public String getRouteLocation(boolean isOrigin) {
+        if (isOrigin){
+            System.out.println("Origin? (lat, lon / name location)");
+        }
+        else{
+            System.out.println("Destination? (lat, lon / name location)");
+        }
+        return scanner.nextLine();
+    }
+
+    public String getRouteArrival() {
+        System.out.println("Departure or arrival? (d / a)");
+        return scanner.nextLine();
+    }
+
+    public String getDate() {
+        System.out.println("Day? (MM-DD-YYYY)");
+        return scanner.nextLine();
+    }
+
+    public String getHour() {
+        System.out.println("Hour? (HH:MMam / HH:MMpm)");
+        return scanner.nextLine();
+    }
+
+    public String getMaxWalkingDistanceInMeters(){
+        System.out.println("Maximum walking distance in meters?");
+        return scanner.nextLine();
+    }
+
+    public void wrongLocation() {
+        System.err.println("Sorry! This location is not valid.\n");
+    }
+
+    public void wrongArrival() {
+        System.err.println("Error! Your must enter \"d\" or \"a\"!");
     }
 
     //Show Bus Wait Times (Option 4)
