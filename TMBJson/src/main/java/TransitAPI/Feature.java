@@ -1,4 +1,4 @@
-package MetroLineAPI;
+package TransitAPI;
 
 public class Feature {
     private Geometry geometry;
@@ -16,5 +16,9 @@ public class Feature {
 
     public MetroStationFeatures getProperties() {
         return properties;
+    }
+
+    public Geometry getGeometry() {
+        return geometry;
     }
 }

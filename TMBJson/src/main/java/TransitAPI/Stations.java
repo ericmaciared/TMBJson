@@ -1,9 +1,9 @@
-package MetroLineAPI;
+package TransitAPI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MetroStations {
+public class Stations {
     private Crs crs;
     private int totalFeatures;
     private String type;
@@ -11,9 +11,13 @@ public class MetroStations {
 
     @Override
     public String toString() {
-        return "MetroLine{" +
+        return "Stations{" +
                 "features=" + Arrays.toString(features) +
                 '}';
+    }
+
+    public Feature[] getFeatures() {
+        return features;
     }
 
     public ArrayList<String> metroStationsInauguratedInYear(int year){

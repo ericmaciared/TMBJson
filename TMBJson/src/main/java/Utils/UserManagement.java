@@ -1,6 +1,6 @@
 package Utils;
 
-import MetroLineAPI.MetroStations;
+import TransitAPI.Stations;
 import DataModel.Location;
 import User.User;
 
@@ -39,6 +39,7 @@ public class UserManagement {
         System.out.println("");
         System.out.println(ask);
         option = scanner.nextLine();
+        System.out.println("");
     }
 
     public boolean validOption() {
@@ -183,12 +184,16 @@ public class UserManagement {
 
 
     //Show Favorite Stops and Stations (Option d)
-    public void showFavorites() {
-
+    public void showFavoriteStops(ArrayList<String> favorite, String locationName) {
+        int index = 1;
+        System.out.println("-"+locationName);
+        for (String s : favorite){
+            System.out.println("\t" + index + ") " + s);
+        }
     }
 
     //Show Metro Stations Inaugurated in Year (Option e)
-    public void stationsInauguratedInBirthYear(User user, MetroStations metroStations) {
+    public void stationsInauguratedInBirthYear(User user, Stations metroStations) {
         int found = 0;
 
         ArrayList<String> stations = metroStations.metroStationsInauguratedInYear(user.getBirthYear());

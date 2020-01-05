@@ -1,6 +1,7 @@
 package User;
 
 import DataModel.Location;
+import TransitAPI.Stations;
 
 import java.util.ArrayList;
 
@@ -27,26 +28,6 @@ public class User {
                 '}';
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public int getBirthYear() {
         return birthYear;
     }
@@ -59,7 +40,7 @@ public class User {
         return favoriteLocations;
     }
 
-    public void addFavorite(Location favoriteLocation, String type) {
-        favoriteLocations.add(new Favorite(type, favoriteLocation));
+    public void addFavorite(Location favoriteLocation, String type, Stations metroStations) {
+        favoriteLocations.add(new Favorite(type, favoriteLocation, metroStations));
     }
 }
