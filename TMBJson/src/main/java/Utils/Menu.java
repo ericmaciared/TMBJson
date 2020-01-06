@@ -40,7 +40,7 @@ public class Menu {
     public void askForOption(){
         String aux;
 
-        System.out.println("");
+        System.out.println();
         System.out.println(ask);
         aux = scanner.nextLine();
         try{
@@ -49,7 +49,7 @@ public class Menu {
         catch (NumberFormatException e){
             option = -1;
         }
-        System.out.println("");
+        System.out.println();
     }
 
     public boolean validOption() {
@@ -103,11 +103,11 @@ public class Menu {
             System.out.println("Do you want to add this location as your favorite? (yes/no)");
             answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("yes")){
-                System.out.println("");
+                System.out.println();
                 return true;
             }
             else if (answer.equalsIgnoreCase("no")){
-                System.out.println("");
+                System.out.println();
                 return false;
             }
             System.err.println("Error! Insert (yes/no) only.");
@@ -120,7 +120,7 @@ public class Menu {
         do {
             System.out.println("Type (home / work / studies / leisure / culture): ");
             answer = scanner.nextLine();
-            System.out.println("");
+            System.out.println();
         } while (!validType(answer));
 
         System.out.println(favoriteLocation + " has been assigned as a new favorite location.\n");
@@ -135,7 +135,7 @@ public class Menu {
 
         if (!b){
             System.err.println("Error! You have to enter \"home\", \"work\", \"studies\",\"leisure\" or \"culture\".");
-            System.out.println("");
+            System.out.println();
         }
 
         return b;
@@ -185,6 +185,10 @@ public class Menu {
         System.err.println("Error! Your must enter \"d\" or \"a\"!");
     }
 
+    public void errorInaccessibleRoute() {
+        System.err.println("TMB is doing its best to make the bus and subway make this route in the future.\n");
+    }
+
     //Show Bus Wait Times (Option 4)
     public int askForCode() {
         int code = -1;
@@ -211,4 +215,7 @@ public class Menu {
         System.out.println();
     }
 
+    public void errorWrongParameter() {
+        System.err.println("Error, there is some wrong parameter :(");
+    }
 }

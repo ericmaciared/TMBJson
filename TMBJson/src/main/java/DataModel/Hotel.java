@@ -10,11 +10,11 @@ public class Hotel extends Location{
 
     @Override
     public void summaryInformation(){
-        System.out.println("");
+        System.out.println();
         System.out.println("Position: " + super.getCoordinates()[0] + ", " + super.getCoordinates()[1]);
         System.out.println("Description: ");
         System.out.println(super.getDescription());
         System.out.println("Stars: " + stars);
-        System.out.println("");
+        System.out.println();
     }
 }
