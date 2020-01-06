@@ -1,11 +1,14 @@
 package Utils;
 
+import PlannerAPI.Itinerary;
+import PlannerAPI.RequestParameters;
 import TransitAPI.Stations;
 import DataModel.DataModel;
 import DataModel.Location;
 import PlannerAPI.Planner;
 import User.User;
 import User.Favorite;
+import User.Stop;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -126,7 +129,7 @@ public class Logic {
         } else if ("b".equals(option)) {
             userManagement.showHistory(history);
         } else if ("c".equals(option)) {
-
+            userManagement.myRoutes(user.getUserItineraries());
         } else if ("d".equals(option)) {
             showFavoriteStopsAndStations();
         } else if ("e".equals(option)) {
@@ -154,11 +157,6 @@ public class Logic {
                 user.getUserLocations().add(newLocation);
             }
         } while (addLocation);
-    }
-
-    //Option 1c
-    private void myRoutes(){
-
     }
 
     //Option 1d
@@ -223,101 +221,134 @@ public class Logic {
         String aux;
         String origin = null;
         String destination = null;
-        String arrival = null;
-        String date = null;
-        String hour = null;
-        String maxDistance = null;
-        boolean correctRoute = true;
-        Planner plans;
+        String arrival;
+        String date;
+        String hour;
+        String maxDistance;
+        Planner plans = null;
+        boolean correct = false;
+        int minDuration = 100000;
+        Itinerary route = null;
 
         do {
-            URL.delete(0, URL.length()); //Reset url
-
+            URL.delete(0, URL.length());
             URL.append("https://api.tmb.cat/v1/planner/plan");
             URL.append(ACCESS);
-            try{
-                //Get origin
-                do {
-                    aux = menu.getRouteLocation(true);
-                } while(!validLocation(aux));
-                URL.append("&fromPlace=");
-                if (aux.contains(",")){
-                    origin = aux.replaceAll("\\s+",""); //delete spaces
-                }
-                else{
-                    for (Location l: data.getLocations()){
-                        if (l.getName().equalsIgnoreCase(aux)){
-                            origin = Arrays.toString(l.getCoordinates()).replaceAll("\\s+","");
-                            origin = origin.replaceAll("\\[", "").replaceAll("\\]","");
-                        }
-                    }
-                }
-                URL.append(origin);
 
-                //Get destination
-                do {
-                    aux = menu.getRouteLocation(false);
-                } while(!validLocation(aux));
-                URL.append("&toPlace=");
-                if (aux.contains(",")){
-                    destination = aux.replaceAll("\\s+",""); //delete spaces
-                }
-                else{
-                    for (Location l: data.getLocations()){
-                        if (l.getName().equalsIgnoreCase(aux)){
-                            destination = Arrays.toString(l.getCoordinates()).replaceAll("\\s+","");
-                            destination = destination.replaceAll("\\[", "").replaceAll("\\]","");
-                        }
-                    }
-                }
-                URL.append(destination);
-
-                //Get departure/arrival
-                URL.append("&arriveBy=");
-                do {
-                    aux = menu.getRouteArrival();
-                    if (aux.equalsIgnoreCase("d")){
-                        arrival = "false";
-                    }
-                    else if (aux.equalsIgnoreCase("a")){
-                        arrival = "true";
-                    }
-                    else{
-                        menu.wrongArrival();
-                        arrival = "null";
-                    }
-                } while (!arrival.equalsIgnoreCase("true") && !arrival.equalsIgnoreCase("false"));
-                URL.append(arrival);
-
-                //Get date
-                URL.append("&date=");
-                date = menu.getDate();
-                URL.append(date);
-
-                //Get hour
-                URL.append("&time=");
-                hour = menu.getHour();
-                URL.append(hour);
-
-                //Get walking distance
-                URL.append("&maxWalkDistance=");
-                maxDistance = menu.getMaxWalkingDistanceInMeters();
-                URL.append(maxDistance);
-
-                URL.append("&mode=TRANSIT,WALK&showIntermediateStops=true");
-
-                //plans = loadRoute(URL);
-            } catch(NullPointerException e){
-                correctRoute = false;
+            //Get origin
+            do {
+                aux = menu.getRouteLocation(true);
+            } while(!validLocation(aux));
+            if (aux.contains(",")){
+                origin = aux.replaceAll("\\s+",""); //delete spaces
             }
-        } while(!correctRoute);
+            else{
+                for (Location l: data.getLocations()){
+                    if (l.getName().equalsIgnoreCase(aux)){
+                        origin = l.getCoordinates()[1] + ","+l.getCoordinates()[0];
+                        //origin = Arrays.toString(l.getCoordinates()).replaceAll("\\s+","");
+                        //origin = origin.replaceAll("\\[", "").replaceAll("\\]","");
+                    }
+                }
+            }
 
-        System.out.println(URL);
+            //Get destination
+            do {
+                aux = menu.getRouteLocation(false);
+            } while(!validLocation(aux));
+            if (aux.contains(",")){
+                destination = aux.replaceAll("\\s+",""); //delete spaces
+            }
+            else{
+                for (Location l: data.getLocations()){
+                    if (l.getName().equalsIgnoreCase(aux)){
+                        destination = l.getCoordinates()[1] + ","+l.getCoordinates()[0];
+                        /*destination = Arrays.toString(l.getCoordinates()).replaceAll("\\s+","");
+                        destination = destination.replaceAll("\\[", "").replaceAll("\\]","");*/
+                    }
+                }
+            }
+
+            //Get departure/arrival
+            do {
+                aux = menu.getRouteArrival();
+                if (aux.equalsIgnoreCase("d")){
+                    arrival = "false";
+                }
+                else if (aux.equalsIgnoreCase("a")){
+                    arrival = "true";
+                }
+                else{
+                    menu.wrongArrival();
+                    arrival = "null";
+                }
+            } while (!arrival.equalsIgnoreCase("true") && !arrival.equalsIgnoreCase("false"));
+
+            //Get date
+            date = menu.getDate();
+
+            //Get hour
+            hour = menu.getHour();
+
+            //Get walking distance
+            maxDistance = menu.getMaxWalkingDistanceInMeters();
+
+            URL.append("&fromPlace=");
+            URL.append(origin);
+            URL.append("&toPlace=");
+            URL.append(destination);
+            URL.append("&date=");
+            URL.append(date);
+            URL.append("&time=");
+            URL.append(hour);
+            URL.append("&arriveBy=");
+            URL.append(arrival);
+            URL.append("&mode=TRANSIT,WALK");
+            URL.append("&maxWalkDistance=");
+            URL.append(maxDistance);
+            URL.append("&showIntermediateStops=true");
+
+        } while (!validRoute(hour, date));
+
+        plans = loadRoute(URL);
+
+        //Get the shortest itinerary
+        for (Itinerary i: plans.getPlan().getItineraries()){
+            i.getDuration();
+            if (i.getDuration() <= minDuration){
+                System.out.println(i.getDuration());
+                route = i;
+                minDuration = i.getDuration();
+            }
+        }
+
+        user.makeRoute(plans.getRequestParameters(), route);
+
 
     }
 
+    private boolean validRoute(String hour, String date) {
+        boolean correct = true;
+
+        if (!hour.matches("/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]?([AaPp][Mm])$/")){
+            correct = false;
+            System.out.println("hour");
+        }
+        if (!date.matches("^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$")){
+            correct = false;
+            System.out.println("date");
+        }
+
+        if (!correct){
+            menu.errorWrongParameter();
+        }
+
+        return correct;
+    }
+
+
     private Planner loadRoute(StringBuilder URL) {
-        Planner planner;
+        Planner planner = null;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -333,11 +364,13 @@ public class Logic {
 
             Gson gson = new Gson();
             planner = gson.fromJson(jsonData, Planner.class);
-            System.out.println(planner.toString());
 
         } catch(IOException e){
             planner = null;
             e.printStackTrace();
+        } catch(IllegalStateException e){
+            planner = null;
+            e.printStackTrace();;
         }
         return planner;
     }
@@ -392,6 +425,7 @@ public class Logic {
         ArrayList<String> list = null;
         boolean empty = false;
         int code = menu.askForCode();
+        boolean favorite = false;
 
         do {
             empty = false;
@@ -419,7 +453,13 @@ public class Logic {
             }
 
             //Check if favorite
-
+            for (Favorite f: user.getFavoriteLocations()){
+                favorite = f.checkFavorite(code);
+                if (favorite){
+                    userManagement.favoriteStopMessage();
+                    break;
+                }
+            }
 
             try{
                 list = busStops.makeBusWaitList();

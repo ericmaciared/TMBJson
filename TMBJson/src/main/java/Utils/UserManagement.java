@@ -3,6 +3,7 @@ package Utils;
 import TransitAPI.Stations;
 import DataModel.Location;
 import User.User;
+import User.Route;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -36,10 +37,10 @@ public class UserManagement {
     public void askForOption(){
         String aux;
 
-        System.out.println("");
+        System.out.println();
         System.out.println(ask);
         option = scanner.nextLine();
-        System.out.println("");
+        System.out.println();
     }
 
     public boolean validOption() {
@@ -68,17 +69,17 @@ public class UserManagement {
             System.out.println("You don't have any location created.\n");
         }
         else{
-            System.out.println("");
+            System.out.println();
             for (Location l: locations){
                 System.out.println(l.getName());
             }
-            System.out.println("");
+            System.out.println();
         }
 
         do {
             System.out.println("Want to create a new location? (yes/no)");
             answer = scanner.nextLine();
-            System.out.println("");
+            System.out.println();
         } while(!yesOrNo(answer));
 
         return answer.equalsIgnoreCase("yes");
@@ -181,7 +182,24 @@ public class UserManagement {
     }
 
     //Show My Routes (Option c)
+    public void myRoutes(ArrayList<Route> routes){
+        int number = 1;
 
+        if (routes.isEmpty()){
+            System.err.println("You have not made any route :(");
+            System.err.println("To search for one, access option 3 in the principal menu.");
+        }
+        else{
+            for (Route r: routes){
+                System.out.println("->Routa "+ number + ":");
+                number++;
+                for (String s: r.getRoute()){
+                    System.out.println(s);
+                }
+            }
+        }
+        System.out.println();
+    }
 
     //Show Favorite Stops and Stations (Option d)
     public void showFavoriteStops(ArrayList<String> favorite, String locationName) {
@@ -189,7 +207,9 @@ public class UserManagement {
         System.out.println("-"+locationName);
         for (String s : favorite){
             System.out.println("\t" + index + ") " + s);
+            index++;
         }
+        System.out.println();
     }
 
     //Show Metro Stations Inaugurated in Year (Option e)
@@ -198,7 +218,7 @@ public class UserManagement {
 
         ArrayList<String> stations = metroStations.metroStationsInauguratedInYear(user.getBirthYear());
 
-        System.out.println("");
+        System.out.println();
         if (stations.isEmpty()){
             System.err.println("No subway station opened your birth year :(");
         }
@@ -208,6 +228,10 @@ public class UserManagement {
                 System.out.println("\t-"+s);
             }
         }
-        System.out.println("");
+        System.out.println();
+    }
+
+    public void favoriteStopMessage() {
+        System.out.println("\nFavorite Stop!");
     }
 }

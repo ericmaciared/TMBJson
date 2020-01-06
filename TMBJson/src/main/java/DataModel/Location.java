@@ -24,10 +24,10 @@ public class Location {
     }
 
     public void summaryInformation(){
-        System.out.println("");
+        System.out.println();
         System.out.println("Position: " + coordinates[0] + ", " + coordinates[1]);
         System.out.println("Description: ");
         System.out.println(description);
-        System.out.println("");
+        System.out.println();
     }
 }

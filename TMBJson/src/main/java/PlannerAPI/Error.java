@@ -7,4 +7,7 @@ public class Error {
     private String msg;
     private boolean noPath;
 
+    public String getMsg() {
+        return msg;
+    }
 }

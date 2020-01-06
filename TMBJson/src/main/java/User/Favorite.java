@@ -31,7 +31,7 @@ public class Favorite {
 
     public void loadStops(Stations metroStations){
         Stations busStops = null;
-        int index = 1;
+        String aux = null;
 
         String URL = "https://api.tmb.cat/v1/transit/parades";
         URL += "?app_id=7d22a8ce&app_key=5fd01a9d3990c923a46ff5acc149034d"; //Building whole URL String with access keys
@@ -59,12 +59,10 @@ public class Favorite {
             double distance = getDistanceFromLatLonInKm(location.getCoordinates()[0], location.getCoordinates()[1],
                     f.getGeometry().getCoordinates()[0], f.getGeometry().getCoordinates()[1]);
             String text = f.getProperties().getNOM_PARADA() + " (" + f.getProperties().getCODI_PARADA() + ") BUS";
-
+            int codi = f.getProperties().getCODI_PARADA();
 
             if (distance <= 0.5){
-                stops.add(new Stop(text, distance));
-                System.out.println(text + distance);
-
+                stops.add(new Stop(text, distance, codi));
             }
         }
 
@@ -74,17 +72,26 @@ public class Favorite {
             double distance = getDistanceFromLatLonInKm(location.getCoordinates()[0], location.getCoordinates()[1],
                     f.getGeometry().getCoordinates()[0], f.getGeometry().getCoordinates()[1]);
             String text =  f.getProperties().getNOM_ESTACIO() + " (" + f.getProperties().getCODI_ESTACIO() + ") METRO";
+            int codi = f.getProperties().getCODI_ESTACIO();
 
             if (distance <= 0.5){
-                stops.add(new Stop(text, distance));
-                System.out.println(text + distance);
+                stops.add(new Stop(text, distance, codi));
             }
         }
 
-        //Sort and add index
-
-
-
+        //Sort by closest
+        int n = stops.size();
+        Stop temp = null;
+        for(int i=0; i < n; i++){
+            for(int j=1; j < (n-i); j++){
+                if(stops.get(j - 1).getDistance() > stops.get(j).getDistance()){
+                    //swap elements
+                    temp = stops.get(j - 1);
+                    stops.set(j - 1, stops.get(j));
+                    stops.set(j, temp);
+                }
+            }
+        }
     }
 
     private double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
@@ -110,5 +117,16 @@ public class Favorite {
             stopStrings.add(s.getText());
         }
         return stopStrings;
+    }
+
+    public boolean checkFavorite(int code) {
+        boolean found = false;
+
+        for (Stop s: stops){
+            if (s.getCodi() == code){
+                found = true;
+            }
+        }
+        return found;
     }
 }
