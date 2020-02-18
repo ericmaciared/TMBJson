@@ -191,7 +191,7 @@ public class UserManagement {
         }
         else{
             for (Route r: routes){
-                System.out.println("->Routa "+ number + ":");
+                System.out.println("->Route "+ number + ":");
                 number++;
                 for (String s: r.getRoute()){
                     System.out.println(s);

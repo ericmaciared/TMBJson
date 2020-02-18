@@ -189,6 +189,16 @@ public class Menu {
         System.err.println("TMB is doing its best to make the bus and subway make this route in the future.\n");
     }
 
+    public void errorWrongParameter() {
+        System.err.println("Error, there is some wrong parameter :(");
+    }
+
+    public void printRoute(ArrayList<String> route) {
+        System.out.println("Fastest combination:");
+        for (String s: route){
+            System.out.println(s);
+        }
+    }
     //Show Bus Wait Times (Option 4)
     public int askForCode() {
         int code = -1;
@@ -215,7 +225,4 @@ public class Menu {
         System.out.println();
     }
 
-    public void errorWrongParameter() {
-        System.err.println("Error, there is some wrong parameter :(");
-    }
 }
