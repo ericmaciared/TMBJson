@@ -52,7 +52,7 @@ public class User {
         favoriteLocations.add(new Favorite(type, favoriteLocation, metroStations));
     }
 
-    public void makeRoute(RequestParameters routeData, Itinerary path){
+    public Route makeRoute(RequestParameters routeData, Itinerary path){
         ArrayList<String> route = new ArrayList<String>();
 
         route.add("\t-Origin: " + routeData.getFromPlace());
@@ -75,7 +75,11 @@ public class User {
         }
         route.add("\t\tDestination");
 
-        userItineraries.add(new Route(route));
+        Route aux = new Route(route);
+
+        userItineraries.add(aux);
+
+        return aux;
     }
 
 }

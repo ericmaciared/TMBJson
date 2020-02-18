@@ -3,9 +3,10 @@ package PlannerAPI;
 public class Planner {
     private RequestParameters requestParameters;
     private Plan plan;
-    private Error error;
+    //private Error error;
     private DebugOutput debugOutput;
     private String status;
+    private String error;
 
     @Override
     public String toString() {
@@ -14,7 +15,7 @@ public class Planner {
                 '}';
     }
 
-    public Error getError() {
+    public String getError() {
         return error;
     }
 
